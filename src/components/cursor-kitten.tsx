@@ -66,6 +66,8 @@ const spriteSets: Record<string, number[][]> = {
   };
 
 const tickMs = 100;
+const tileSize = 56;
+const radius = tileSize / 2;
 
 export function CursorKitten() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -81,7 +83,7 @@ export function CursorKitten() {
 
     function setSprite(name: string, frame: number) {
       const sprite = spriteSets[name][frame % spriteSets[name].length];
-      element.style.backgroundPosition = `${sprite[0] * 40}px ${sprite[1] * 40}px`;
+      element.style.backgroundPosition = `${sprite[0] * tileSize}px ${sprite[1] * tileSize}px`;
     }
 
     function resetIdleAnimation() {
@@ -178,19 +180,21 @@ export function CursorKitten() {
       x -= (diffX / distance) * travel;
       y -= (diffY / distance) * travel;
 
-      x = Math.min(Math.max(20, x), window.innerWidth - 20);
-      y = Math.min(Math.max(20, y), window.innerHeight - 20);
+      x = Math.min(Math.max(radius, x), window.innerWidth - radius);
+      y = Math.min(Math.max(radius, y), window.innerHeight - radius);
 
-      element.style.left = `${x - 20}px`;
-      element.style.top = `${y - 20}px`;
+      element.style.left = `${x - radius}px`;
+      element.style.top = `${y - radius}px`;
     }
 
     function follow(event: PointerEvent) {
       if (event.pointerType !== "mouse" || !enabled.matches) return;
-      targetX = Math.max(20, Math.min(window.innerWidth - 20, event.clientX));
-      targetY = Math.max(20, Math.min(window.innerHeight - 20, event.clientY));
+      targetX = Math.max(radius, Math.min(window.innerWidth - radius, event.clientX));
+      targetY = Math.max(radius, Math.min(window.innerHeight - radius, event.clientY));
       if (!timer) {
-        element.style.visibility = "visible";
+        const bounds = element.getBoundingClientRect();
+        x = bounds.left + bounds.width / 2;
+        y = bounds.top + bounds.height / 2;
         frame();
         timer = window.setInterval(frame, tickMs);
       }
@@ -198,7 +202,9 @@ export function CursorKitten() {
     function stop() {
       window.clearInterval(timer);
       timer = 0;
-      element.style.visibility = "hidden";
+      element.style.removeProperty("left");
+      element.style.removeProperty("top");
+      setSprite("idle", 0);
     }
     window.addEventListener("pointermove", follow, { passive: true });
     enabled.addEventListener("change", stop);

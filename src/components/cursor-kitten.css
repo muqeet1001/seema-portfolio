@@ -1,12 +1,11 @@
 .cursor-kitten {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 40px;
-  height: 40px;
+  top: 72px;
+  left: calc(100% - 80px);
+  width: 56px;
+  height: 56px;
   z-index: 110;
-  visibility: hidden;
   pointer-events: none;
   image-rendering: pixelated;
-  background: url("/oneko.gif") -120px -120px / 320px 160px no-repeat;
+  background: transparent url("../assets/kitten-light.png") -168px -168px / 448px 224px no-repeat;
 }
