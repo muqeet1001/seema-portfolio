@@ -14,7 +14,7 @@ import { TechStack } from "@/sections/TechStack";
 import { GithubActivity } from "@/sections/GithubActivity";
 import { CommandPalette } from "@/components/command-palette";
 import { Konami } from "@/components/konami";
-import { CursorKitten } from "@/components/cursor-kitten";
+import { CursorButterfly } from "@/components/cursor-butterfly";
 import { Analytics } from "@vercel/analytics/react";
 
 function ScrollToTop() {
@@ -70,7 +70,7 @@ export function App() {
         <Analytics />
         <ScrollToTop />
         <Konami />
-        <CursorKitten />
+        <CursorButterfly />
         <div className="min-h-screen bg-[var(--bg)] font-sans text-[var(--fg)] antialiased transition-colors duration-300 relative">
           <Nav onOpenPalette={() => setPaletteOpen(true)} />
           <SideIndex />

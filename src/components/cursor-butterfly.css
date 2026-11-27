@@ -1,0 +1,38 @@
+.cursor-butterfly {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 72px;
+  aspect-ratio: 104 / 96;
+  z-index: 110;
+  pointer-events: none;
+  perspective: 240px;
+  transform: translate(-100%, -100%);
+}
+.butterfly-defs, .butterfly-body, .butterfly-pose, .butterfly-side,
+.butterfly-wing, .butterfly-wing svg { position: absolute; }
+.butterfly-pose, .butterfly-side, .butterfly-wing {
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.butterfly-pose { transform: rotateX(var(--pitch, 18deg)) rotateY(var(--roll, -9deg)); }
+.butterfly-side { left: 50%; transform-origin: left; }
+.butterfly-left { transform: scaleX(-1); }
+.butterfly-wing { transform-origin: left; transform: rotateY(calc(-1 * var(--fold, 24deg))); }
+.butterfly-wing svg { inset: 0; width: 100%; height: 100%; }
+.wing-panel { position: absolute; inset: 0; transform-style: preserve-3d; }
+.wing-panel svg { backface-visibility: hidden; }
+.wing-reverse { transform: rotateY(180deg); }
+.wing-root .wing-face { clip-path: inset(0 54.5% 0 0); }
+.wing-tip .wing-face { clip-path: inset(0 0 0 45%); }
+.wing-tip {
+
+  transform-origin: 45% 50%;
+  transform: rotateY(var(--flex, 0deg));
+}
+.butterfly-body { inset: 0; width: 100%; transform: translateZ(1px); }
+@media (prefers-reduced-motion: reduce), (not (any-pointer: fine)) {
+  .cursor-butterfly { display: none; }
+}
+
+.wing-root .wing-reverse { clip-path: inset(0 0 0 54.5%); }
+.wing-tip .wing-reverse { clip-path: inset(0 45% 0 0); }
